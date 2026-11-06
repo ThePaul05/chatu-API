@@ -1,0 +1,14 @@
+const router = require('express').Router();
+const c = require('../controllers/room.controller');
+const m = require('../controllers/message.controller');
+const wrap = require('../middlewares/asyncHandler');
+const validateId = require('../middlewares/validateObjectId');
+router.post('/', wrap(c.create));
+router.get('/', wrap(c.list));
+router.get('/:id', validateId, wrap(c.get));
+router.post('/:id/join', validateId, wrap(c.join));
+router.post('/:id/leave', validateId, wrap(c.leave));
+router.delete('/:id', validateId, wrap(c.remove));
+router.post('/:id/messages', validateId, wrap(m.send));
+router.get('/:id/messages', validateId, wrap(m.list));
+module.exports = router;
